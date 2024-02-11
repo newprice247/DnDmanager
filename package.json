@@ -3,15 +3,16 @@
   "version": "1.0.0",
   "description": "An app to manage your DnD characters and search for information on monsters and spells",
   "main": "index.js",
+  "license": "ISC",
   "scripts": {
     "start": "npm run build && node server/server.js",
     "hrc": "cd client && npm run hotReload",
-    "hrs": "nodemon server/server.js",
+    "hrs": "start http://localhost:5000 & nodemon server/server.js",
     "develop": "concurrently \"cd server && npm run watch\" \"cd client && npm run dev\"",
     "install": "cd server && npm i && cd ../client && npm i",
     "seed": "cd server && npm run seed",
     "build": "cd client && npm run build",
-    "render-build":"npm install && npm run build"
+    "render-build": "npm install && npm run build"
   },
   "repository": {
     "type": "git",
@@ -28,7 +29,6 @@
     "react"
   ],
   "author": "newprice247",
-  "license": "ISC",
   "bugs": {
     "url": "https://github.com/newprice247/DnDmanager/issues"
   },

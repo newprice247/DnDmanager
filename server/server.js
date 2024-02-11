@@ -4,7 +4,7 @@ const express = require('express');
 
 const db = require('./config/connection');
 
-const PORT = process.env.PORT
+const PORT = 5000 || process.env.PORT;
 const app = express();
 
 app.use(express.urlencoded({ extended: false }));
