@@ -1,7 +1,12 @@
 const express = require('express');
 const router = express.Router();
-const { getConditions } = require('../../../controllers/conditions');
+const { 
+    getConditions,
+    getConditionByName
+} = require('../../../controllers/conditions');
 
 router.get('/', getConditions);
+
+router.get('/:name', getConditionByName);
 
 module.exports = router;

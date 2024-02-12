@@ -9,5 +9,14 @@ module.exports = {
             .catch(err => {
                 res.status(422).json(err);
             });
-    }
+    },
+    getAcolyte: async (req, res) => {
+        await axios.get('http://dnd5eapi.co/api/backgrounds/acolyte')
+            .then(response => {
+                res.json(response.data);
+            })
+            .catch(err => {
+                res.status(422).json(err);
+            });
+    },
 };
