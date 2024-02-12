@@ -3,7 +3,7 @@ const router = express.Router();
 const {
     getAlignments,
     getAlignmentByName
-} = require('../../../controllers/alignments');
+} = require('../../../controllers/dnd/alignments');
 
 router.get('/', getAlignments);
 

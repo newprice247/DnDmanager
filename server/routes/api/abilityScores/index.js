@@ -3,7 +3,7 @@ const router = express.Router();
 const {
     getAbilityScores,
     getAbilityScoreByName
-} = require('../../../controllers/abilityScores');
+} = require('../../../controllers/dnd/abilityScores');
 
 router.get('/', getAbilityScores);
 

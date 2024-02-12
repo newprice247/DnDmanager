@@ -3,7 +3,7 @@ const router = express.Router();
 const { 
     getClasses,
     getClassByName
-} = require('../../../controllers/classes');
+} = require('../../../controllers/dnd/classes');
 
 router.get('/', getClasses);
 

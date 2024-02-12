@@ -3,7 +3,7 @@ const router = express.Router();
 const { 
     getDamageTypes,
     getDamageTypeByName,
-} = require('../../../controllers/damageTypes');
+} = require('../../../controllers/dnd/damageTypes');
 
 router.get('/', getDamageTypes);
 

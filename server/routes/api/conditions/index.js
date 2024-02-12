@@ -3,7 +3,7 @@ const router = express.Router();
 const { 
     getConditions,
     getConditionByName
-} = require('../../../controllers/conditions');
+} = require('../../../controllers/dnd/conditions');
 
 router.get('/', getConditions);
 
