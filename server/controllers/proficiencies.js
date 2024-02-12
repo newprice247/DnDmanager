@@ -1,7 +1,7 @@
 const axios = require('axios');
 
 module.exports = {
-    getProficiences(req, res) {
+    getProficiencies(req, res) {
         axios.get('http://dnd5eapi.co/api/proficiencies')
             .then(response => {
                 res.json(response.data);

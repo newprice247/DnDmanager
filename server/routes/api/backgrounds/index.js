@@ -1,8 +1,7 @@
 const express = require('express');
 const router = express.Router();
+const { getBackgrounds } = require('../../../controllers/backgrounds');
 
-router.get('/', (req, res) => {
-    res.json({message: 'Hello there from DnDmanager server!'});
-});
+router.get('/', getBackgrounds);
 
 module.exports = router;

@@ -1,8 +1,7 @@
 const express = require('express');
 const router = express.Router();
+const { getRuleSections } = require('../../../controllers/ruleSections');
 
-router.get('/', (req, res) => {
-    res.json({message: 'Hello there from DnDmanager server!'});
-});
+router.get('/', getRuleSections);
 
 module.exports = router;

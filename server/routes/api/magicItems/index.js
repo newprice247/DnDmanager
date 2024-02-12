@@ -1,8 +1,7 @@
 const express = require('express');
 const router = express.Router();
+const { getMagicItems } = require('../../../controllers/magicItems');
 
-router.get('/', (req, res) => {
-    res.json({message: 'Hello there from DnDmanager server!'});
-});
+router.get('/', getMagicItems);
 
 module.exports = router;

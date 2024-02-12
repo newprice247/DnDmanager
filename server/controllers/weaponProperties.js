@@ -1,8 +1,8 @@
 const axios = require('axios');
 
 module.exports = {
-    getWeaponProficiences(req, res) {
-        axios.get('http://dnd5eapi.co/api/weapon-proficiencies')
+    getWeaponProperties(req, res) {
+        axios.get('http://dnd5eapi.co/api/weapon-properties/')
             .then(response => {
                 res.json(response.data);
             })

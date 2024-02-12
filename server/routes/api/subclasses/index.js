@@ -1,8 +1,7 @@
 const express = require('express');
 const router = express.Router();
+const { getSubclasses } = require('../../../controllers/subclasses');
 
-router.get('/', (req, res) => {
-    res.json({message: 'Hello there from DnDmanager server!'});
-});
+router.get('/', getSubclasses);
 
 module.exports = router;

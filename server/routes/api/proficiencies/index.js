@@ -1,8 +1,7 @@
 const express = require('express');
 const router = express.Router();
+const { getProficiencies } = require('../../../controllers/proficiencies');
 
-router.get('/', (req, res) => {
-    res.json({message: 'Hello there from DnDmanager server!'});
-});
+router.get('/', getProficiencies);
 
 module.exports = router;

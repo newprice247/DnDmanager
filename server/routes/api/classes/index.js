@@ -1,8 +1,7 @@
 const express = require('express');
 const router = express.Router();
+const { getClasses } = require('../../../controllers/classes');
 
-router.get('/', (req, res) => {
-    res.json({message: 'Hello there from DnDmanager server!'});
-});
+router.get('/', getClasses);
 
 module.exports = router;

@@ -1,8 +1,7 @@
 const express = require('express');
 const router = express.Router();
+const { getLanguages } = require('../../../controllers/languages');
 
-router.get('/', (req, res) => {
-    res.json({message: 'Hello there from DnDmanager server!'});
-});
+router.get('/', getLanguages);
 
 module.exports = router;

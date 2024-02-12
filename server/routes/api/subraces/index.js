@@ -1,8 +1,7 @@
 const express = require('express');
 const router = express.Router();
+const { getSubraces } = require('../../../controllers/subraces');
 
-router.get('/', (req, res) => {
-    res.json({message: 'Hello there from DnDmanager server!'});
-});
+router.get('/', getSubraces);
 
 module.exports = router;
