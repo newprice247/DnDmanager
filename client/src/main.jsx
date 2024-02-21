@@ -1,7 +1,10 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+
+import Home from './pages/home.jsx'
 import App from './App.jsx'
+
 import './index.css'
 
 import { ThemeProvider } from "@material-tailwind/react";
@@ -10,6 +13,12 @@ const router = createBrowserRouter([
   {
     path: '/',
     element: <App />,
+    children: [
+      {
+        path: '/',
+        element: <Home />,
+      },
+    ],
   },
 ])
 

@@ -26,29 +26,29 @@ const subracesRouter = require('./subraces');
 const traitsRouter = require('./traits');
 const weaponPropertiesRouter = require('./weaponProperties');
 
-router.use('/abilityScores', abilityScoresRouter);
+router.use('/ability-scores', abilityScoresRouter);
 router.use('/alignments', alignmentsRouter);
 router.use('/backgrounds', backgroundsRouter);
 router.use('/classes', classesRouter);
 router.use('/conditions', conditionsRouter);
-router.use('/damageTypes', damageTypesRouter);
+router.use('/damage-types', damageTypesRouter);
 router.use('/equipment', equipmentRouter);
-router.use('/equipmentCategories', equipmentCategoriesRouter);
+router.use('/equipment-categories', equipmentCategoriesRouter);
 router.use('/features', featuresRouter);
 router.use('/languages', languagesRouter);
-router.use('/magicItems', magicItemsRouter);
-router.use('/magicSchools', magicSchoolsRouter);
+router.use('/magic-items', magicItemsRouter);
+router.use('/magic-schools', magicSchoolsRouter);
 router.use('/monsters', monstersRouter);
 router.use('/proficiencies', proficienciesRouter);
-router.use('/racesRouter', racesRouter);
+router.use('/races', racesRouter);
 router.use('/rules', rulesRouter);
-router.use('/ruleSections', ruleSectionsRouter);
+router.use('/rule-sections', ruleSectionsRouter);
 router.use('/skills', skillsRouter);
 router.use('/spells', spellsRouter);
 router.use('/subclasses', subclassesRouter);
 router.use('/subraces', subracesRouter);
 router.use('/traits', traitsRouter);
-router.use('/weaponProperties', weaponPropertiesRouter);
+router.use('/weapon-properties', weaponPropertiesRouter);
 
 getAll = async (req, res) => {
     const url = `http://www.dnd5eapi.co/api`;
