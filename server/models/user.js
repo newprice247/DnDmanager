@@ -3,26 +3,32 @@ const bcrypt = require("bcrypt");
 const { Schema, model } = mongoose;
 
 const userSchema = new Schema({
-    name: { type: String, required: true },
-    email: { type: String, required: true },
-    password: { type: String, required: true }
-},
-    {
-        toJSON: {
-            virtuals: true,
-        },
-        id: false
-    } 
+    username: {
+        type: String,
+        required: true,
+        unique: 'Username already exists',
+        
+    },
+    email: {
+        type: String,
+        required: true,
+        unique: 'Email already exists',
+    },
+    password: {
+        type: String,
+        required: true,
+    },
+    characters: [{type: Schema.Types.ObjectId, ref: "character"}]
+});
 
-);
-
-userSchema.pre("save", async function (next) {
+userSchema.pre("save", async function(next) {
     const user = this;
     if (user.isModified("password")) {
         user.password = await bcrypt.hash(user.password, 8);
     }
     next();
 });
+
 
 const User = model("user", userSchema);
 

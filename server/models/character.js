@@ -2,8 +2,9 @@ const mongoose = require('mongoose');
 const { Schema, model } = mongoose;
 
 const characterSchema = new Schema({
-    name: { type: String, required:
-        true
+    name: { 
+        type: String, 
+        required: true
     },
     class: { type: String, required:
         true
@@ -18,10 +19,10 @@ const characterSchema = new Schema({
         true
     },
     experience: { type: Number, required:
-        true
+        false
     },
     level: { type: Number, required:
-        true
+        false
     },
     strength: { type: Number, required:
         true
