@@ -1,93 +1,132 @@
 import React, { useState, useEffect } from "react";
 import search from "../utils/API";
-const categories = [];
-const subInfo = []; 
+import { Link } from "react-router-dom";
+
+import { Carousel, Typography, Button } from "@material-tailwind/react";
+
+
 export default function Home() {
-      
-
-    
-
-    // function CategoryButton (props) {
-    //     return (
-    //         <button 
-    //         id={props.href}
-    //         className="text-blue-500 hover:text-blue-800 py-2 px-4 font-semibold text-lg rounded-lg"
-    //         onClick={handleClick}
-    //         >{props.category}</button>
-    //     )
-    // }
-
-    // function SubCategoryButton (props) {
-    //     return (
-    //         <button 
-    //         id={props.href}
-    //         className="text-blue-500 hover:text-blue-800 py-2 px-4 font-semibold text-lg rounded-lg"
-    //         onClick={
-    //             async () => {
-    //                 await search.getL3(props.url)
-    //                 .then(response => {
-    //                     console.log(response);
-    //                     // Create a new array to hold the sub-subcategories
-    //                     let newSubSubData = [];
-    //                     // Loop through the response object
-    //                     for (let i in response) {
-    //                         // Check if the value is an array (nested array)
-    //                         if (Array.isArray(response[i])) {
-    //                             // If nested array, push its elements to the newSubSubData array
-    //                             newSubSubData.push(['desc', ...response[i]]);
-    //                             console.log(newSubSubData);
-    //                         } else if (typeof response[i] === 'boolean') {
-    //                             // If the value is a boolean, push the key to the newSubSubData array
-    //                             newSubSubData.push([i, response[i].toString()]);
-    //                             console.log(newSubSubData);
-    //                         } else if (typeof response[i] === 'object') {
-    //                             // If the value is an object, push the key to the newSubSubData array
-    //                             newSubSubData.push([i, JSON.stringify(response[i])]);
-    //                             console.log(newSubSubData);
-    //                         } else {
-    //                             // If not nested array, push the key-value pair to the newSubSubData array
-    //                             newSubSubData.push([i, response[i]]);
-    //                             console.log(newSubSubData);
-    //                         }
-    //                     }
-    //                     // Set the state with the newSubSubData array
-    //                     setSubSubData(newSubSubData);
-    //                 })
-    //             }
-    //         }
-    //         >{props.name}</button>
-    //     )
-    // }
-
-    function SubInfoContainer (props) {
-        return (
-            <div>
-                <h1>{props.name}</h1>
-                <p>{props.info}</p>
-            </div>
-        )
-    }
 
     return (
-        <div>
-            <h1>Home</h1>
-            <h2>Categories</h2>
-            {/* {data && data.map((category, index) => (
-                <CategoryButton key={index} href={category[0]} category={category[0]} />
-            ))}
-            <h2>Subcategories</h2>
-            {subData && subData.map((category, index) => (
-                <SubCategoryButton key={index} name={category.name} url={category.url} />
-            ))}
-            <h2>SubSubcategories</h2>
-            {subSubData && subSubData.map((category, index) => (
-                <SubInfoContainer 
-                key={index} 
-                name={category[0]} 
-                /> 
-            ))} */}
-                
-        </div>
+        <>
+            
+                <Carousel 
+                className="h-screen w-full overflow-hidden relative"
+                >
+          <div className="relative h-full w-full">
+            <img
+              src="https://images.unsplash.com/photo-1497436072909-60f360e1d4b1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2560&q=80"
+              alt="image 1"
+              className="h-full w-full object-cover"
+            />
+            <div className="absolute inset-0 grid h-full w-full place-items-center bg-black/75">
+              <div className="w-3/4 text-center md:w-2/4">
+                <Typography
+                  variant="h1"
+                  color="white"
+                  className="mb-4 text-3xl md:text-4xl lg:text-5xl"
+                >
+                  The Beauty of Nature
+                </Typography>
+                <Typography
+                  variant="lead"
+                  color="white"
+                  className="mb-12 opacity-80"
+                >
+                  It is not so much for its beauty that the forest makes a claim
+                  upon men&apos;s hearts, as for that subtle something, that quality
+                  of air that emanation from old trees, that so wonderfully changes
+                  and renews a weary spirit.
+                </Typography>
+                <div className="flex justify-center gap-2">
+                  <Button size="lg" color="white">
+                    Explore
+                  </Button>
+                  <Button size="lg" color="white" variant="text">
+                    Gallery
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="relative h-full w-full">
+            <img
+              src="https://images.unsplash.com/photo-1493246507139-91e8fad9978e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2940&q=80"
+              alt="image 2"
+              className="h-full w-full object-cover"
+            />
+            <div className="absolute inset-0 grid h-full w-full items-center bg-black/75">
+              <div className="w-3/4 pl-12 md:w-2/4 md:pl-20 lg:pl-32">
+                <Typography
+                  variant="h1"
+                  color="white"
+                  className="mb-4 text-3xl md:text-4xl lg:text-5xl"
+                >
+                  The Beauty of Nature
+                </Typography>
+                <Typography
+                  variant="lead"
+                  color="white"
+                  className="mb-12 opacity-80"
+                >
+                  It is not so much for its beauty that the forest makes a claim
+                  upon men&apos;s hearts, as for that subtle something, that quality
+                  of air that emanation from old trees, that so wonderfully changes
+                  and renews a weary spirit.
+                </Typography>
+                <div className="flex gap-2">
+                  <Button size="lg" color="white">
+                    Explore
+                  </Button>
+                  <Button size="lg" color="white" variant="text">
+                    Gallery
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="relative h-full w-full">
+            <img
+              src="https://images.unsplash.com/photo-1518623489648-a173ef7824f3?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2762&q=80"
+              alt="image 3"
+              className="h-full w-full object-cover"
+            />
+            <div className="absolute inset-0 grid h-full w-full items-end bg-black/75">
+              <div className="w-3/4 pl-12 pb-12 md:w-2/4 md:pl-20 md:pb-20 lg:pl-32 lg:pb-32">
+                <Typography
+                  variant="h1"
+                  color="white"
+                  className="mb-4 text-3xl md:text-4xl lg:text-5xl"
+                >
+                  The Beauty of Nature
+                </Typography>
+                <Typography
+                  variant="lead"
+                  color="white"
+                  className="mb-12 opacity-80"
+                >
+                  It is not so much for its beauty that the forest makes a claim
+                  upon men&apos;s hearts, as for that subtle something, that quality
+                  of air that emanation from old trees, that so wonderfully changes
+                  and renews a weary spirit.
+                </Typography>
+                <div className="flex gap-2">
+                  <Button size="lg" color="white">
+                    Explore
+                  </Button>
+                  <Button size="lg" color="white" variant="text">
+                    Gallery
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </Carousel>
+        </>
+    );
 
-    )
+
+   
+
+
 }

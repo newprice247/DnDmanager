@@ -28,6 +28,8 @@ import {
   TagIcon,
   UserGroupIcon,
 } from "@heroicons/react/24/solid";
+
+import { Link } from "react-router-dom";
  
 const navListMenuItems = [
   {
@@ -166,7 +168,9 @@ function NavList() {
         color="blue-gray"
         className="font-medium"
       >
+        <Link to="/">
         <ListItem className="flex items-center gap-2 py-2 pr-4">Home</ListItem>
+        </Link>
       </Typography>
       <NavListMenu />
       <Typography
@@ -199,24 +203,30 @@ export default function NavbarWithMegaMenu() {
     >
       <div className="flex items-center justify-between text-blue-gray-900"
       >
+        <Link to="/">
         <Typography
           as="a"
           href="#"
           variant="h6"
           className="mr-4 cursor-pointer py-1.5 lg:ml-2"
         >
-          Material Tailwind
+          DnD Manager
         </Typography>
+        </Link>
         <div className="hidden lg:block">
           <NavList />
         </div>
         <div className="hidden gap-2 lg:flex">
+          <Link to="/login" className="text-blue-gray-900">
           <Button variant="text" size="sm" color="blue-gray">
+            Sign Up
+          </Button>
+          </Link>
+          <Link to="/login" className="text-blue-gray-900">
+          <Button variant="gradient" size="sm">
             Log In
           </Button>
-          <Button variant="gradient" size="sm">
-            Sign In
-          </Button>
+          </Link>
         </div>
         <IconButton
           variant="text"
@@ -238,7 +248,7 @@ export default function NavbarWithMegaMenu() {
             Log In
           </Button>
           <Button variant="gradient" size="sm" fullWidth>
-            Sign In
+            Sign Up
           </Button>
         </div>
       </Collapse>
