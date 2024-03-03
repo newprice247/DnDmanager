@@ -26,9 +26,6 @@ const subracesRouter = require('./subraces');
 const traitsRouter = require('./traits');
 const weaponPropertiesRouter = require('./weaponProperties');
 
-const userRouter = require('./users');
-const characterRouter = require('./characters');
-
 router.use('/ability-scores', abilityScoresRouter);
 router.use('/alignments', alignmentsRouter);
 router.use('/backgrounds', backgroundsRouter);
@@ -52,9 +49,6 @@ router.use('/subclasses', subclassesRouter);
 router.use('/subraces', subracesRouter);
 router.use('/traits', traitsRouter);
 router.use('/weapon-properties', weaponPropertiesRouter);
-
-router.use('/users', userRouter);
-router.use('/characters', characterRouter);
 
 getAllDnD = async (req, res) => {
     const url = `http://www.dnd5eapi.co/api`;

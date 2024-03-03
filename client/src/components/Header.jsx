@@ -180,9 +180,11 @@ function NavList() {
         color="blue-gray"
         className="font-medium"
       >
+        <Link to="/user-profile">
         <ListItem className="flex items-center gap-2 py-2 pr-4">
-          Contact Us
+          User Proile Test
         </ListItem>
+        </Link>
       </Typography>
     </List>
   );
@@ -199,7 +201,7 @@ export default function NavbarWithMegaMenu() {
   }, []);
  
   return (
-    <Navbar className="mx-auto px-4 py-2 max-w-screen-2xl"
+    <Navbar className=" py-2 w-full max-w-none rounded-none w-[100vw]"
     >
       <div className="flex items-center justify-between text-blue-gray-900"
       >
