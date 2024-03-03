@@ -24,5 +24,23 @@ module.exports = {
             .catch(err => {
                 res.status(422).json(err);
             });
-    }
+    }, 
+    async createUser(req, res) {
+        await User.create(req.body)
+            .then(newUser => {
+                res.json(newUser);
+            })
+            .catch(err => {
+                res.status(422).json(err);
+            });
+    },
+    async updateUser(req, res) {
+        await User.findOneAndUpdate({ _id: req.params.id }, req.body)
+            .then(user => {
+                res.json(user);
+            })
+            .catch(err => {
+                res.status(422).json(err);
+            });
+    },
 };

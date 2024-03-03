@@ -82,7 +82,7 @@ async function seedUsers(numberOfUsers) {
             const user = new User({
                 username: faker.internet.userName(),
                 email: faker.internet.email(),
-                password: faker.internet.password(),
+                password: 'password1',
             });
             users.push(user);
         }
