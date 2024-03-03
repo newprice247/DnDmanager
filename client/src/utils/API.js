@@ -1,5 +1,45 @@
 import axios from "axios";
 
+export const createUser = (userData) => {
+    try {
+        return fetch('/players/users'), {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(userData)
+        }
+    } catch (error) {
+        console.log(`Unable to create user ${userData}`);
+        console.log(error);
+    }
+}
+
+export const loginUser = (userData) => {
+    return fetch('/players/users/login', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(userData),
+    });
+}
+
+export const updateUser = (userID, userData) => {
+    try {
+        return fetch(`/players/users/${userID}`), {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(userData)
+        }
+    } catch (error) {
+        console.log(`Unable to update user ${userID}, ${userData}`);
+        console.log(error);
+    }
+}
+
 
 const search = {
     getL1: async () => {

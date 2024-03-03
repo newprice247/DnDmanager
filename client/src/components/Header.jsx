@@ -30,7 +30,8 @@ import {
 } from "@heroicons/react/24/solid";
 
 import { Link } from "react-router-dom";
- 
+import Auth from '../utils/auth'
+
 const navListMenuItems = [
   {
     title: "Products",
@@ -78,7 +79,7 @@ const navListMenuItems = [
     icon: TagIcon,
   },
 ];
- 
+
 function NavListMenu() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
@@ -112,7 +113,7 @@ function NavListMenu() {
       </a>
     ),
   );
- 
+
   return (
     <React.Fragment>
       <Menu
@@ -132,15 +133,13 @@ function NavListMenu() {
               Resources
               <ChevronDownIcon
                 strokeWidth={2.5}
-                className={`hidden h-3 w-3 transition-transform lg:block ${
-                  isMenuOpen ? "rotate-180" : ""
-                }`}
+                className={`hidden h-3 w-3 transition-transform lg:block ${isMenuOpen ? "rotate-180" : ""
+                  }`}
               />
               <ChevronDownIcon
                 strokeWidth={2.5}
-                className={`block h-3 w-3 transition-transform lg:hidden ${
-                  isMobileMenuOpen ? "rotate-180" : ""
-                }`}
+                className={`block h-3 w-3 transition-transform lg:hidden ${isMobileMenuOpen ? "rotate-180" : ""
+                  }`}
               />
             </ListItem>
           </Typography>
@@ -157,7 +156,7 @@ function NavListMenu() {
     </React.Fragment>
   );
 }
- 
+
 function NavList() {
   return (
     <List className="mt-4 mb-6 p-0 lg:mt-0 lg:mb-0 lg:flex-row lg:p-1">
@@ -169,7 +168,7 @@ function NavList() {
         className="font-medium"
       >
         <Link to="/">
-        <ListItem className="flex items-center gap-2 py-2 pr-4">Home</ListItem>
+          <ListItem className="flex items-center gap-2 py-2 pr-4">Home</ListItem>
         </Link>
       </Typography>
       <NavListMenu />
@@ -181,54 +180,62 @@ function NavList() {
         className="font-medium"
       >
         <Link to="/user-profile">
-        <ListItem className="flex items-center gap-2 py-2 pr-4">
-          User Proile Test
-        </ListItem>
+          <ListItem className="flex items-center gap-2 py-2 pr-4">
+            User Proile Test
+          </ListItem>
         </Link>
       </Typography>
     </List>
   );
 }
- 
+
 export default function NavbarWithMegaMenu() {
   const [openNav, setOpenNav] = React.useState(false);
- 
+
   React.useEffect(() => {
     window.addEventListener(
       "resize",
       () => window.innerWidth >= 960 && setOpenNav(false),
     );
   }, []);
- 
+
   return (
     <Navbar className=" py-2 w-full max-w-none rounded-none w-[100vw]"
     >
       <div className="flex items-center justify-between text-blue-gray-900"
       >
         <Link to="/">
-        <Typography
-          as="a"
-          href="#"
-          variant="h6"
-          className="mr-4 cursor-pointer py-1.5 lg:ml-2"
-        >
-          DnD Manager
-        </Typography>
+          <Typography
+            as="a"
+            href="#"
+            variant="h6"
+            className="mr-4 cursor-pointer py-1.5 lg:ml-2"
+          >
+            DnD Manager
+          </Typography>
         </Link>
         <div className="hidden lg:block">
           <NavList />
         </div>
+
         <div className="hidden gap-2 lg:flex">
-          <Link to="/login" className="text-blue-gray-900">
-          <Button variant="text" size="sm" color="blue-gray">
-            Sign Up
-          </Button>
-          </Link>
-          <Link to="/login" className="text-blue-gray-900">
-          <Button variant="gradient" size="sm">
-            Log In
-          </Button>
-          </Link>
+          {Auth.loggedIn() ? (
+            <p>Hello!</p>
+          ) : (
+            <>
+              <Link to="/login" className="text-blue-gray-900">
+                <Button variant="text" size="sm" color="blue-gray">
+                  Sign Up
+                </Button>
+              </Link>
+              <Link to="/login" className="text-blue-gray-900">
+                <Button variant="gradient" size="sm">
+                  Log In
+                </Button>
+              </Link>
+            </>
+          )}
+
         </div>
         <IconButton
           variant="text"
