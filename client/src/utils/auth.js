@@ -17,6 +17,9 @@ class AuthService {
             const token = this.getToken();
             console.log('Token retrieved for Login');
             return !!token && !this.isTokenExpired(token);
+        } else if (!this) {
+            console.log('No token available for Login');
+            return false;
         }
     }
 
@@ -36,7 +39,14 @@ class AuthService {
     getToken() {
         console.log('Retrieving Token');
         try {
-            return localStorage.getItem('id_token');
+            if (this === null) {
+                console.log('No token available for retrieval');
+                return null;
+            } else {
+                const token = localStorage.getItem('id_token');
+                console.log('Token retrieved for token get');
+                return token;
+            }
         } catch (error) {
             console.log('Error retrieving token for token get');
             console.log(error);
@@ -46,10 +56,11 @@ class AuthService {
     login(idToken) {
         try {
             localStorage.setItem('id_token', idToken);
-            window.location.assign('/');
+            window.location.assign('/user-profile');
             console.log('Login Successful with ID token')
         } catch (error) {
             console.log('Error Logging in with ID token');
+            
             console.log(error);
         }
     }

@@ -220,7 +220,12 @@ export default function NavbarWithMegaMenu() {
 
         <div className="hidden gap-2 lg:flex">
           {Auth.loggedIn() ? (
-            <p>Hello!</p>
+            <Button
+              variant="gradient"
+              size="sm"
+              onClick={Auth.logout}
+              fullWidth={false}
+              >Logout</Button>
           ) : (
             <>
               <Link to="/login" className="text-blue-gray-900">

@@ -32,6 +32,7 @@ module.exports = {
     async createUser(req, res) {
         try {
             const user = await User.create(req.body);
+            
             const token = signToken()
             res.json({ token, user })
         } catch (error) {
@@ -62,12 +63,11 @@ module.exports = {
                 $or: [{username: body.username}, {email: body.email}]
             });
             if (!user) {
-                console.log(`Login Failed for ${user.username || user.email}`);
-                return res.status(400).json({ message: "Could not find a user with this username or email"});
+                return res.status(400).json({ message: "We can't find this user" });
             }
             const correctPw = await user.isCorrectPassword(body.password);
             if (!correctPw) {
-                return res.status(400).json({ message: "Wrong Password!" });
+                return res.status(400).json({ message: "Incorrect password!" });
             }
             const token = signToken(user);
             res.json({ token, user });

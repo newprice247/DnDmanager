@@ -28,6 +28,14 @@ const userSchema = new Schema({
 });
 
 userSchema.pre("save", async function (next) {
+    if (this.isNew || this.isModified("email")) {
+        try {
+            this.email = this.email.toLowerCase();
+        } catch (error) {
+            console.log('Unsuccessful attempt to lowercase email on user modification');
+            console.log(error);
+        }
+    }
     if (this.isNew || this.isModified("password")) {
         try {
             this.password = await bcrypt.hash(this.password, 8);
