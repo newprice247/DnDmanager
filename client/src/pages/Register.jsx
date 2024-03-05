@@ -17,6 +17,9 @@ export default function SimpleRegistrationForm() {
         email: "",
         password: "",
     });
+    useEffect(() => {
+        console.log(userFormData);
+    }  , [userFormData]);
 
     return (
         <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
@@ -34,12 +37,14 @@ export default function SimpleRegistrationForm() {
                         </Typography>
                         <Input
                             size="lg"
-                            placeholder="name@mail.com"
+                            placeholder="Username"
                             className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
                             labelProps={{
                                 className: "before:content-none after:content-none",
                             }}
-                            onChange={(e) => setUserFormData({ ...userFormData, username: e.target.value })}
+                            onChange={(e) => {
+                                setUserFormData({ ...userFormData, username: e.target.value })
+                            }}
                         />
                         <Typography variant="h6" color="blue-gray" className="-mb-3">
                             Your Email
@@ -102,6 +107,7 @@ export default function SimpleRegistrationForm() {
                         onClick={async (e) => {
                             e.preventDefault();
                             try {
+                                console.log(userFormData);
                                 const response = await registerUser(userFormData);
                                 console.log(response);
                                 if (!response.ok) {

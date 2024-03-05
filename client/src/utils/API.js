@@ -2,7 +2,7 @@ import axios from "axios";
 
 export const createUser = (userData) => {
     try {
-        return fetch('/players/users'), {
+        return fetch('/players/users/register'), {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -42,6 +42,7 @@ export const updateUser = (userID, userData) => {
 }
 
 export const registerUser = (userData) => {
+    console.log(`registerUser: ${userData}`);
     return fetch('/players/users/register', {
         method: 'POST',
         headers: {

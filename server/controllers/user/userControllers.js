@@ -32,14 +32,13 @@ module.exports = {
     async createUser(req, res) {
         try {
             const user = await User.create(req.body);
-            
-            const token = signToken()
-            res.json({ token, user })
+            const token = signToken(user);
+            res.json({ token, user });
         } catch (error) {
-            console.log('Could not create user with this request');
+            console.log('User Creation Unsuccessful');
             console.log(error);
+            res.status(400).json({ message: "Not able to create user with these parameters" });
         }
-
     },
     async updateUser({ params, body }, res) {
         try {
