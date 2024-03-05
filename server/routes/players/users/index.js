@@ -5,8 +5,7 @@ const { getUsers, getUser, createUser, updateUser, login } = require('../../../c
 router.get('/', getUsers);
 router.get('/:id', getUser);
 router.route('/login').post(login)
-
-router.post('/', createUser);
+router.post('/register', createUser);
 
 router.put('/:id', updateUser);
 

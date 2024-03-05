@@ -26,7 +26,7 @@ export default function Home() {
                         >Log In to start managing your character or swipe to the right to search our database</p>
                         <Link to="/login">
                             <button
-                                className="bg-gray-900 text-white"
+                                className="bg-gray-900 text-white p-4 rounded-md"
                             >Log In</button>
                         </Link>
                     </div>

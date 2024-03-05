@@ -4,6 +4,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 import Home from './pages/Home'
 import Login from './pages/Login'
+import Register from './pages/Register'
 import UserProfile from './pages/UserProfile.jsx';
 import App from './App.jsx'
 
@@ -27,6 +28,10 @@ const router = createBrowserRouter([
       {
         path: '/user-profile',
         element: <UserProfile />,
+      },
+      {
+        path: '/register',
+        element: <Register />,
       },
 
     ],
