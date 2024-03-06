@@ -67,7 +67,7 @@ async function seedCharacters(numberOfCharacters) {
                 characters[i].level = 20;
             }
         }
-                
+
         await Character.insertMany(characters);
         console.log(`${numberOfCharacters} characters seeded successfully.`);
     } catch (error) {
@@ -87,23 +87,56 @@ async function seedUsers(numberOfUsers) {
             users.push(user);
         }
         await User.insertMany(users);
-        await Character.find({})
-        .then(characters => {
-            characters.forEach(async character => {
-                const user = await User.findOneAndUpdate(
-                    { _id: faker.random.arrayElement(users)._id },
-                    { $push: { characters: character._id } },
-                    { new: true }
-                );
-                console.log(`Character ${character.name} assigned to user ${user.username}`);
-            }
-            );
-        });
-        console.log(`${numberOfUsers} users seeded successfully.`);
+
+
+
     } catch (error) {
         console.error('Error seeding users:', error);
     }
 }
+
+async function attachCharacters() {
+    try {
+        const foundUsers = await User.find({});
+        const characters = await Character.find({});
+        characters.forEach(async character => {
+            const randomUser = faker.random.arrayElement(foundUsers);
+            const user = await User.findOneAndUpdate(
+                { _id: randomUser._id },
+                { $push: { characters: character._id } },
+                { new: true }
+            );
+            console.log(`Character ${character.name} assigned to user ${user.username}`);
+        });
+    } catch (error) {
+        console.error(error)
+    }
+}
+
+async function attachUsers() {
+    try {
+        const foundUsers = await User.find({});
+
+        for (const user of foundUsers) {
+            for (const characterID of user.characters) {
+                console.log(characterID);
+                try {
+                    const updatedCharacter = await Character.findOneAndUpdate(
+                        { _id: characterID },
+                        { $push: { user: user._id } },
+                        { new: true }
+                    );
+                    console.log(`${user._id} has been added to character ${updatedCharacter._id}`);
+                } catch (error) {
+                    console.error(`Error attaching user ${user._id} to character ${characterID}:`, error);
+                }
+            }
+        }
+    } catch (err) {
+        console.error(err);
+    }
+}
+
 
 connection.once("open", async () => {
     console.log('seeder connected')
@@ -122,6 +155,8 @@ connection.once("open", async () => {
 
     await seedCharacters(10);
     await seedUsers(10);
+    await attachCharacters();
+    await attachUsers();
     console.log('All data seeded successfully');
 
     process.exit(0);

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Navbar,
   Collapse,
@@ -192,6 +192,16 @@ function NavList() {
 export default function NavbarWithMegaMenu() {
   const [openNav, setOpenNav] = React.useState(false);
 
+  const [user, setUser] = useState({
+    username: "",
+    email: ""
+  })
+
+  const name = Auth.getProfile().data.username
+  useEffect(() => {
+    setUser({ ...user, username: name });
+  }, [name]);
+
   React.useEffect(() => {
     window.addEventListener(
       "resize",
@@ -220,12 +230,20 @@ export default function NavbarWithMegaMenu() {
 
         <div className="hidden gap-2 lg:flex">
           {Auth.loggedIn() ? (
-            <Button
-              variant="gradient"
-              size="sm"
-              onClick={Auth.logout}
-              fullWidth={false}
+
+            <div
+              className="flex items-center gap-2"
+            >
+              <p>Welcome {user.username}</p>
+              <Button
+                variant="gradient"
+                size="sm"
+                onClick={Auth.logout}
+                fullWidth={false}
               >Logout</Button>
+            </div>
+
+
           ) : (
             <>
               <Link to="/login" className="text-blue-gray-900">

@@ -83,7 +83,7 @@ const search = {
     },
     getUsers: async () => {
         try {
-            const response = await axios.get(`/api/users`);
+            const response = await axios.get(`/players/users`);
             return response.data;
         }
         catch (error) {
@@ -92,7 +92,7 @@ const search = {
     },
     getUser: async (id) => {
         try {
-            const response = await axios.get(`/api/users/${id}`);
+            const response = await axios.get(`/players/users/${id}`);
             return response.data;
         }
         catch (error) {

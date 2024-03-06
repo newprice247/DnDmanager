@@ -4,12 +4,7 @@ import { jwtDecode } from 'jwt-decode';
 class AuthService {
 
     getProfile() {
-        if (this) {
-            console.log(`${this} token retrieved`);
-            return decode(this.getToken);
-        } else {
-            console.log('No token available for AuthService')
-        }
+            return jwtDecode(this.getToken());
     }
 
     loggedIn() {
