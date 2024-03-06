@@ -15,7 +15,7 @@ module.exports = {
             });
     },
     async getCharacter(req, res) {
-        await Character.findById(req.params.name)
+        await Character.findById(req.params.id)
             .then(character => {
                 res.json(character);
             })

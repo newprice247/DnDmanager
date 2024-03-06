@@ -101,16 +101,16 @@ const search = {
     },
     getCharacters: async (id) => {
         try {
-            const response = await axios.get(`/api/characters`);
+            const response = await axios.get(`/players/characters`);
             return response.data;
         }
         catch (error) {
             console.log(error);
         }
     },
-    getCharacter: async (name) => {
+    getCharacter: async (id) => {
         try {
-            const response = await axios.get(`/api/characters/${name}`);
+            const response = await axios.get(`/players/characters/${id}`);
             return response.data;
         }
         catch (error) {

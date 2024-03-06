@@ -31,6 +31,7 @@ import {
 
 import { Link } from "react-router-dom";
 import Auth from '../utils/auth'
+import search from '../utils/API'
 
 const navListMenuItems = [
   {
@@ -193,14 +194,30 @@ export default function NavbarWithMegaMenu() {
   const [openNav, setOpenNav] = React.useState(false);
 
   const [user, setUser] = useState({
+    id: "",
     username: "",
-    email: ""
+    email: "",
+    characters: []
   })
 
-  const name = Auth.getProfile().data.username
+  const [userCharacters, setUserCharacters] = useState([]);
+
+
   useEffect(() => {
-    setUser({ ...user, username: name });
-  }, [name]);
+    try {
+      const loggedInUser = Auth.getProfile().data;
+
+      if (typeof loggedInUser.username === 'string') {
+        setUser({
+          id: loggedInUser._id,
+          username: loggedInUser.username,
+          email: loggedInUser.email
+        });
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }, []);
 
   React.useEffect(() => {
     window.addEventListener(

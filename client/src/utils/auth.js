@@ -19,33 +19,17 @@ class AuthService {
     }
 
     isTokenExpired(token) {
-        try {
             const decoded = jwtDecode(token);
             if (decoded.exp < Date.now() / 1000) {
                 return true;
             } else return false;
-        } catch (err) {
-            console.log('Error retrieving token for token expiration check');
-            console.log(err);
-            return false;
-        }
     }
 
     getToken() {
         console.log('Retrieving Token');
-        try {
-            if (this === null) {
-                console.log('No token available for retrieval');
-                return null;
-            } else {
                 const token = localStorage.getItem('id_token');
                 console.log('Token retrieved for token get');
                 return token;
-            }
-        } catch (error) {
-            console.log('Error retrieving token for token get');
-            console.log(error);
-        }
     }
 
     login(idToken) {

@@ -3,6 +3,6 @@ const router = express.Router();
 const { getCharacters, getCharacter } = require('../../../controllers/character/characterControllers');
 
 router.get('/', getCharacters);
-router.get('/:name', getCharacter);
+router.get('/:id', getCharacter);
 
 module.exports = router;
