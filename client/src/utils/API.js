@@ -52,6 +52,21 @@ export const registerUser = (userData) => {
     });
 }
 
+export const createCharacter = (characterData) => {
+    try {
+        return fetch('/players/characters', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(characterData)
+        });
+    } catch (error) {
+        console.log(`Unable to create character ${characterData}`);
+        console.log(error);
+    }
+}
+
 
 const search = {
     getL1: async () => {
@@ -111,6 +126,33 @@ const search = {
     getCharacter: async (id) => {
         try {
             const response = await axios.get(`/players/characters/${id}`);
+            return response.data;
+        }
+        catch (error) {
+            console.log(error);
+        }
+    },
+    getClasses: async () => {
+        try {
+            const response = await axios.get(`/api/classes`);
+            return response.data;
+        }
+        catch (error) {
+            console.log(error);
+        }
+    },
+    getRaces: async () => {
+        try {
+            const response = await axios.get(`/api/races`);
+            return response.data;
+        }
+        catch (error) {
+            console.log(error);
+        }
+    },
+    getBackgrounds: async () => {
+        try {
+            const response = await axios.get(`/api/backgrounds`);
             return response.data;
         }
         catch (error) {

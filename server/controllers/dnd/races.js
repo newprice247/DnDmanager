@@ -2,7 +2,7 @@ const axios = require('axios');
 
 module.exports = {
     async getRaces(req, res) {
-        await axios.get('http://dnd5eapi/api/races')
+        await axios.get('http://dnd5eapi.co/api/races')
             .then(response => {
                 res.json(response.data);
             })
@@ -11,7 +11,7 @@ module.exports = {
             });
     },
     async getRaceByName(req, res) {
-        await axios.get(`http://dnd5eapi/api/races/${req.params.name}`)
+        await axios.get(`http://dnd5eapi.co/api/races/${req.params.name}`)
             .then(response => {
                 res.json(response.data);
             })
