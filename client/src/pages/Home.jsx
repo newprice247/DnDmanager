@@ -15,13 +15,13 @@ import '../assets/styles/swiperStyles.css';
 async function handleLoginOrRegister(email) {
     await search.getUserByEmail(email).then((res) => {
         console.log(res);
-        if (res.email === email) {
+        if (res === null) {
+            localStorage.setItem("email", email);
+            window.location.href = "/register";
+        } else if (res.email === email) {
             localStorage.setItem("email", email);
             localStorage.setItem("username", res.username);
-            window.location.replace("/login");
-        } else {
-            localStorage.setItem("email", email);
-            window.location.replace("/register");
+            window.location.href = "/login";
         }
     });
 }
@@ -37,30 +37,41 @@ export default function Home() {
 
             <div className="flex flex-col justify-center bg-neutral-200">
                 <div className="flex flex-col justify-center w-full bg-white">
-                    <div className="flex overflow-hidden relative flex-col pb-20 w-full h-[100vh]">
-                        <img
-                            loading="lazy"
-                            srcSet="/images/dnd_characters.jpeg"
-                            className="object-cover absolute inset-0 size-full"
-                        />
-                        <div className="flex relative flex-col items-center sm:my-20 md:my-30 lg:my-40 xl:my-60">
-                            <div className="">
+                    <div 
+                    className="flex overflow-hidden flex-col pb-20 w-full h-[100vh]"
+                    style={{ backgroundImage: "url('/images/dnd_characters.jpeg')", backgroundSize: "cover", backgroundPosition: "center"}}
+                    >
+                        <div 
+                        className="flex flex-col items-center my-[5rem] p-5 pr-10 bg-black bg-opacity-50 w-full h-full text-white space-y-5 text-center"
+                        
+                        >
+                            <div 
+                            className="xxs:text-xl xs:text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl"
+                            >
                                 Welcome to DND Manager!
                             </div>
-                            <div className="">
+                            <div 
+                            className="xxs:text-base xs:text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl"
+                            >
                                 Don’t worry, your characters are safe with us
                             </div>
-                            <div className="">
+                            <div 
+                            className="xxs:text-base xs:text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl"
+                            >
                                 Use our easy-to-use platform to effortlessly organize and access
                                 your DnD Characters. With us, you can master your adventures from
                                 anywhere, ensuring your characters are always primed for epic
                                 quests.
                             </div>
-                            <div className="">
+                            <div 
+                            className="xxs:text-lg xs:text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl"
+                            >
                                 Sign in or Register a new account to start managing those DnD
                                 Characters!
                             </div>
-                            <div className="w-full">
+                            <div 
+                            className="xxs:w-full xs:w-full sm:w-full md:w-80 lg:w-70 xl:w-60"
+                            >
                                 <div className="w-full relative">
                                     <Input
                                         type="email"
