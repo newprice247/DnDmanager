@@ -18,11 +18,24 @@ export default function SimpleRegistrationForm() {
         password: "",
     });
     const [inviteEmail, setInviteEmail] = useState("");
+
+    const handleRegister = async () => {
+        const response = await registerUser(userFormData);
+        if (!response.ok) {
+            throw new Error("something went wrong!");
+        }
+        const { token, user } = await response.json();
+        console.log(token);
+        Auth.login(token)
+    }
+
+
     useEffect(() => {
         try {
             const email = localStorage.getItem("email");
             if (email) {
                 setInviteEmail(email);
+                setUserFormData({ ...userFormData, email: email });
                 localStorage.removeItem("email");
             }
         } catch (error) {
@@ -31,7 +44,7 @@ export default function SimpleRegistrationForm() {
     }, []);
     useEffect(() => {
         console.log(userFormData);
-    }  , [userFormData]);
+    }, [userFormData]);
 
     return (
         <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
@@ -61,19 +74,34 @@ export default function SimpleRegistrationForm() {
                         <Typography variant="h6" color="blue-gray" className="-mb-3">
                             Your Email
                         </Typography>
-                        <Input
-                            size="lg"
-                            placeholder="name@mail.com"
-                            value={inviteEmail ? inviteEmail : ""}
-                            className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
-                            labelProps={{
-                                className: "before:content-none after:content-none",
-                            }}
-                            onChange={(e) => {
-                                setUserFormData({ ...userFormData, email: e.target.value })
-                            }
-                            }
-                        />
+                        {inviteEmail ? (
+                            <Input
+                                size="lg"
+                                value={inviteEmail}
+                                className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
+                                labelProps={{
+                                    className: "before:content-none after:content-none",
+                                }}
+                                onChange={(e) => {
+                                    setUserFormData({ ...userFormData, email: e.target.value })
+                                }
+                                }
+                            />
+                        ) : (
+                            <Input
+                                size="lg"
+                                placeholder="Email"
+                                className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
+                                labelProps={{
+                                    className: "before:content-none after:content-none",
+                                }}
+                                onChange={(e) => {
+                                    setUserFormData({ ...userFormData, email: e.target.value })
+                                }
+                                }
+                            />
+                        )}
+
                         <Typography variant="h6" color="blue-gray" className="-mb-3">
                             Password
                         </Typography>
@@ -89,11 +117,15 @@ export default function SimpleRegistrationForm() {
                                 setUserFormData({ ...userFormData, password: e.target.value })
                                 console.log(userFormData);
                             }
-                        }
+                            }
                             onKeyDown={(e) => {
                                 if (e.key === "Enter") {
                                     e.preventDefault();
-                                    registerUser(userFormData);
+                                    try {
+                                        handleRegister();
+                                    } catch (err) {
+                                        console.error(err);
+                                    }
                                 }
                             }}
                         />
@@ -120,15 +152,7 @@ export default function SimpleRegistrationForm() {
                         onClick={async (e) => {
                             e.preventDefault();
                             try {
-                                console.log(userFormData);
-                                const response = await registerUser(userFormData);
-                                console.log(response);
-                                if (!response.ok) {
-                                    throw new Error("something went wrong!");
-                                }
-                                const { token, user } = await response.json();
-                                console.log(token);
-                                Auth.login(token);
+                                handleRegister();
                             } catch (err) {
                                 console.error(err);
                             }
