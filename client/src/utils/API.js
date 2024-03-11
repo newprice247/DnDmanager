@@ -114,6 +114,17 @@ const search = {
             console.log(error);
         }
     },
+    getUserByEmail: async (email) => {
+        try {
+            const response = await axios.get(`/players/users/email/${email}`);
+            console.log(response);
+
+            return response.data;
+        }
+        catch (error) {
+            console.log(error);
+        }
+    },
     getCharacters: async (id) => {
         try {
             const response = await axios.get(`/players/characters`);

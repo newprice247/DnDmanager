@@ -17,6 +17,18 @@ export default function SimpleRegistrationForm() {
         email: "",
         password: "",
     });
+    const [inviteEmail, setInviteEmail] = useState("");
+    useEffect(() => {
+        try {
+            const email = localStorage.getItem("email");
+            if (email) {
+                setInviteEmail(email);
+                localStorage.removeItem("email");
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }, []);
     useEffect(() => {
         console.log(userFormData);
     }  , [userFormData]);
@@ -52,6 +64,7 @@ export default function SimpleRegistrationForm() {
                         <Input
                             size="lg"
                             placeholder="name@mail.com"
+                            value={inviteEmail ? inviteEmail : ""}
                             className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
                             labelProps={{
                                 className: "before:content-none after:content-none",

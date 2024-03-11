@@ -18,11 +18,25 @@ module.exports = {
     },
     async getUser({ user = null, params }, res) {
         await User.findOne({
-            $or: [{ _id: user ? user._id : params.id }, { username: params.username }]
+            $or: [{ _id: user ? user._id : params.id }, { email: params.email}]
         })
             .select('-__v -password')
             .populate('characters')
             .then(user => {
+                res.json(user);
+            })
+            .catch(err => {
+                res.status(422).json(err);
+            });
+    },
+    async getUserByEmail({ params }, res) {
+        await User.findOne({
+            email: params.email
+        })
+            .select('-__v -password')
+            .populate('characters')
+            .then(user => {
+                console.log(user);
                 res.json(user);
             })
             .catch(err => {
