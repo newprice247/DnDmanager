@@ -1,0 +1,25 @@
+.backgroundSlider {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    z-index: 0;
+}
+
+.backgroundImage {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    transition: opacity 2s ease-in-out;
+    z-index: -1;
+}
+
+.backgroundImage.visible {
+    opacity: 1;
+    z-index: -1;
+}
