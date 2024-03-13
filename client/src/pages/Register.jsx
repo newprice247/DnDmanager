@@ -14,10 +14,9 @@ import {
 export default function SimpleRegistrationForm() {
     const [userFormData, setUserFormData] = useState({
         username: "",
-        email: "",
+        email: localStorage.getItem("email") || "",
         password: "",
     });
-    const [inviteEmail, setInviteEmail] = useState("");
 
     const handleRegister = async () => {
         const response = await registerUser(userFormData);
@@ -32,10 +31,8 @@ export default function SimpleRegistrationForm() {
 
     useEffect(() => {
         try {
-            const email = localStorage.getItem("email");
-            if (email) {
-                setInviteEmail(email);
-                setUserFormData({ ...userFormData, email: email });
+            const localStorageEmail = localStorage.getItem("email");
+            if (localStorageEmail) {
                 localStorage.removeItem("email");
             }
         } catch (error) {
@@ -46,6 +43,13 @@ export default function SimpleRegistrationForm() {
         console.log(userFormData);
     }, [userFormData]);
 
+    const handleChange = (event) => {
+        const { name, value } = event.target;
+        setUserFormData({
+            ...userFormData,
+            [name]: value 
+        });
+    };
     return (
         <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
             <Card color="transparent" shadow={false}>
@@ -62,6 +66,7 @@ export default function SimpleRegistrationForm() {
                         </Typography>
                         <Input
                             size="lg"
+                            name="username"
                             placeholder="Username"
                             className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
                             labelProps={{
@@ -74,39 +79,25 @@ export default function SimpleRegistrationForm() {
                         <Typography variant="h6" color="blue-gray" className="-mb-3">
                             Your Email
                         </Typography>
-                        {inviteEmail ? (
                             <Input
                                 size="lg"
-                                value={inviteEmail}
+                                name="email"
+                                placeholder="Email Address"
                                 className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
                                 labelProps={{
                                     className: "before:content-none after:content-none",
                                 }}
-                                onChange={(e) => {
-                                    setUserFormData({ ...userFormData, email: e.target.value })
-                                }
-                                }
+                                onChange={handleChange}
+                                required="true"
+                                value={userFormData.email}
                             />
-                        ) : (
-                            <Input
-                                size="lg"
-                                placeholder="Email"
-                                className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
-                                labelProps={{
-                                    className: "before:content-none after:content-none",
-                                }}
-                                onChange={(e) => {
-                                    setUserFormData({ ...userFormData, email: e.target.value })
-                                }
-                                }
-                            />
-                        )}
 
                         <Typography variant="h6" color="blue-gray" className="-mb-3">
                             Password
                         </Typography>
                         <Input
                             type="password"
+                            name="password"
                             size="lg"
                             placeholder="********"
                             className=" !border-t-blue-gray-200 focus:!border-t-gray-900"

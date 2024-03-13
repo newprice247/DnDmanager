@@ -19,13 +19,14 @@ import 'swiper/css/bundle';
 import '../assets/styles/swiperStyles.css';
 
 async function handleLoginOrRegister(email) {
-    await search.getUserByEmail(email).then((res) => {
+    const lcEmail = email.toLowerCase();
+    await search.getUserByEmail(lcEmail).then((res) => {
         console.log(res);
         if (res === null) {
-            localStorage.setItem("email", email);
+            localStorage.setItem("email", lcEmail);
             window.location.href = "/register";
-        } else if (res.email === email) {
-            localStorage.setItem("email", email);
+        } else if (res.email === lcEmail) {
+            localStorage.setItem("email", lcEmail);
             localStorage.setItem("username", res.username);
             window.location.href = "/login";
         }
