@@ -41,6 +41,22 @@ export const updateUser = (userID, userData) => {
     }
 }
 
+export const addCharacterToUser = (userID, characterID) => {
+    try {
+        return fetch(`/players/users/${userID}/${characterID}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(characterID)
+        });
+    } catch (error) {
+        console.log(`Unable to add character ${characterID} to user ${userID}`);
+        console.log(error);
+    }
+}
+
+
 export const registerUser = (userData) => {
     console.log(`registerUser: ${userData}`);
     return fetch('/players/users/register', {
@@ -164,6 +180,15 @@ const search = {
     getBackgrounds: async () => {
         try {
             const response = await axios.get(`/api/backgrounds`);
+            return response.data;
+        }
+        catch (error) {
+            console.log(error);
+        }
+    },
+    getAlignments: async () => {
+        try {
+            const response = await axios.get(`/api/alignments`);
             return response.data;
         }
         catch (error) {

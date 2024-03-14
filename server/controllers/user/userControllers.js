@@ -70,6 +70,23 @@ module.exports = {
             res.status(400).json({ message: "Not able to update user with these parameters"});
         }
     },
+    async addCharacterToUser({ params, body }, res) {
+        try {
+            const updatedUser = await User.findByIdAndUpdate(
+                { _id: params.id },
+                { $push: { characters: params.characterId } },
+                { new: true, runValidators: true }
+            );
+            if (!updatedUser) {
+                return res.status(400).json({ message: "Could not find a user with this id" });
+            }
+        }
+        catch (error) {
+            console.log('Add Character to User Unsuccessful');
+            console.log(error);
+            res.status(400).json({ message: "Not able to add character to user with these parameters"});
+        }
+    },
     async login({body}, res) {
         try {
             const user = await User.findOne({

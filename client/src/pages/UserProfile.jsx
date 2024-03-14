@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import search from "../utils/API";
-import { createCharacter } from "../utils/API";
+import { createCharacter, updateUser, addCharacterToUser } from "../utils/API";
 import { Link } from "react-router-dom";
 import Auth from "../utils/auth";
+import CharacterCard from "../components/CharacterCard";
 import {
     Button,
     Dialog,
@@ -16,29 +17,6 @@ import {
     Card
 } from "@material-tailwind/react";
 
-function CharacterCard(props) {
-    return (
-        <Card>
-            <Card.Body>
-                <Link to={`/characters/${props._id}`}>
-                    <h3>{props.name}</h3>
-                </Link>
-                <div
-                    className="flex flex-col items-center justify-center w-full h-full"
-                >
-                    <p>Level: {props.level}</p>
-                    <p>Class: {props.class}</p>
-                    <p>Race: {props.race}</p>
-                    <p>Background: {props.background}</p>
-                    <p>Alignment: {props.alignment}</p>
-                    <p>Experience: {props.experience}</p>
-                </div>
-
-
-            </Card.Body>
-        </Card>
-    );
-}
 
 function NewCharacterDropdown(props) {
     return (
@@ -82,22 +60,28 @@ export default function UserProfile() {
     const [classes, setClasses] = useState([]);
     const [races, setRaces] = useState([]);
     const [backgrounds, setBackgrounds] = useState([]);
+    const [alignment, setAlignment] = useState([]);
     useEffect(() => {
         search.getClasses()
-            .then((data) => setClasses(data))
+            .then((data) => {
+                console.log(data);
+                setClasses(data.results)
+            })
             .catch((error) => console.error("Error fetching classes:", error));
         search.getRaces()
-            .then((data) => setRaces(data))
+            .then((data) => setRaces(data.results))
             .catch((error) => console.error("Error fetching races:", error));
         search.getBackgrounds()
-            .then((data) => setBackgrounds(data))
+            .then((data) => setBackgrounds(data.results))
             .catch((error) => console.error("Error fetching backgrounds:", error));
+        search.getAlignments()
+            .then((data) => setAlignment(data.results))
+            .catch((error) => console.error("Error fetching alignment:", error));
     }, []);
 
 
     const [character, setCharacter] = useState({
         name: "",
-        level: 1,
         class: "",
         race: "",
         background: "",
@@ -112,17 +96,17 @@ export default function UserProfile() {
         user: Auth.getProfile().data._id
     });
 
-    // const handleChange = (event) => {
-    //     const { name, value } = event.target;
-    //     setCharacter({ ...character, [name]: value });
-    // };
+    const handleChange = (event) => {
+        const { name, value } = event.target;
+        setCharacter({ ...character, [name]: value });
+    };
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
-        createCharacter(character)
-            .then((data) => {
-                console.log(data);
-                setShowModal(false);
+        await createCharacter(character)
+            .then(async (data) => {
+                handleOpen();
+                window.location.reload();
             })
             .catch((error) => console.error("Error creating character:", error));
     };
@@ -182,9 +166,11 @@ export default function UserProfile() {
                         <DialogHeader>
                             <h5 className="text-2xl font-semibold">Create a New Character</h5>
                         </DialogHeader>
-                        <DialogBody>
+                        <DialogBody
+                        className="overflow-scroll h-96"
+                        >
                             <form
-                                className="flex flex-col items-center justify-center w-full h-full"
+                                className="flex flex-col items-center justify-center"
                                 onSubmit={handleSubmit}
                             >
                                 <p>Name</p>
@@ -192,46 +178,23 @@ export default function UserProfile() {
                                     type="text"
                                     name="name"
                                     value={character.name}
+                                    className="mb-4"
                                     onChange={handleChange}
                                     placeholder="Character Name"
                                 />
-                                {/* <NewCharacterDropdown
-                                    children={classes.map((characterClass) => (
-                                        <NewCharacterDropdownItem >
-                                            <button
-                                                type="button"
-                                                onClick={() => setCharacter({ ...character, class: characterClass.name })}
-                                            >{characterClass.name}</button>
-                                        </NewCharacterDropdownItem>
-                                    ))} />
-                                <NewCharacterDropdown />
-                                <NewCharacterDropdown
-                                    children={races.map((race) => (
-                                        <NewCharacterDropdownItem >
-                                            <button
-                                                type="button"
-                                                onClick={() => setCharacter({ ...character, race: race.name })}
-                                            >{race.name}</button>
-                                        </NewCharacterDropdownItem>
-                                    ))} />
-                                <NewCharacterDropdown
-                                    children={backgrounds.map((background) => (
-                                        <NewCharacterDropdownItem >
-                                            <button
-                                                type="button"
-                                                onClick={() => setCharacter({ ...character, background: background.name })}
-                                            >{background.name}</button>
-                                        </NewCharacterDropdownItem>
-                                    ))}
-                                />  */}
+
                                 <p>Alignment</p>
-                                <Input
-                                    type="text"
+                                <select
                                     name="alignment"
                                     value={character.alignment}
+                                    className="w-full border-2 border-gray-300 rounded-md p-2"
                                     onChange={handleChange}
-                                    placeholder="Alignment"
-                                />
+                                >
+                                    <option value="">Select an Alignment</option>
+                                    {alignment.map((alignmentData) => (
+                                        <option key={alignmentData._id} value={alignmentData.name}>{alignmentData.name}</option>
+                                    ))}
+                                </select>
                                 <p>Experience</p>
                                 <Input
                                     type="number"
@@ -240,6 +203,92 @@ export default function UserProfile() {
                                     onChange={handleChange}
                                     placeholder="Experience"
                                 />
+                                <p>Class</p>
+                                <select
+                                    name="class"
+                                    value={character.class}
+                                    className="w-full border-2 border-gray-300 rounded-md p-2"
+                                    onChange={handleChange}
+                                >
+                                    <option value="">Select a Class</option>
+                                    {classes.map((classData) => (
+                                        <option key={classData._id} value={classData.name}>{classData.name}</option>
+                                    ))}
+                                </select>
+                                <p>Race</p>
+                                <select
+                                    name="race"
+                                    value={character.race}
+                                    className="w-full border-2 border-gray-300 rounded-md p-2"
+                                    onChange={handleChange}
+                                >
+                                    <option value="">Select a Race</option>
+                                    {races.map((raceData) => (
+                                        <option key={raceData._id} value={raceData.name}>{raceData.name}</option>
+                                    ))}
+                                </select>
+                                <p>Background</p>
+                                <select
+                                    name="background"
+                                    value={character.background}
+                                    className="w-full border-2 border-gray-300 rounded-md p-2"
+                                    onChange={handleChange}
+                                >
+                                    <option value="">Select a Background</option>
+                                    {backgrounds.map((backgroundData) => (
+                                        <option key={backgroundData._id} value={backgroundData.name}>{backgroundData.name}</option>
+                                    ))}
+                                </select>
+                                <p>Strength</p>
+                                <Input
+                                    type="number"
+                                    name="strength"
+                                    value={character.strength}
+                                    onChange={handleChange}
+                                    placeholder="Strength"
+                                />
+                                <p>Dexterity</p>
+                                <Input
+                                    type="number"
+                                    name="dexterity"
+                                    value={character.dexterity}
+                                    onChange={handleChange}
+                                    placeholder="Dexterity"
+                                />
+                                <p>Constitution</p>
+                                <Input
+                                    type="number"
+                                    name="constitution"
+                                    value={character.constitution}
+                                    onChange={handleChange}
+                                    placeholder="Constitution"
+                                />
+                                <p>Intelligence</p>
+                                <Input
+                                    type="number"
+                                    name="intelligence"
+                                    value={character.intelligence}
+                                    onChange={handleChange}
+                                    placeholder="Intelligence"
+                                />
+                                <p>Wisdom</p>
+                                <Input
+                                    type="number"
+                                    name="wisdom"
+                                    value={character.wisdom}
+                                    onChange={handleChange}
+                                    placeholder="Wisdom"
+                                />
+                                <p>Charisma</p>
+                                <Input
+                                    type="number"
+                                    name="charisma"
+                                    value={character.charisma}
+                                    onChange={handleChange}
+                                    placeholder="Charisma"
+                                />
+
+
                                 <Button
                                     color="blue"
                                     buttonType="filled"
@@ -249,8 +298,9 @@ export default function UserProfile() {
                                     iconOnly={false}
                                     ripple="light"
                                     type="submit"
+                                    className="mt-4"
                                 >Create Character</Button>
-                            // </form>
+                             </form>
 
 
                         </DialogBody>
@@ -261,14 +311,18 @@ export default function UserProfile() {
                         {user.characters.map((character) => (
                             <CharacterCard
                                 key={character._id}
-                                _id={character._id}
                                 name={character.name}
-                                level={character.level}
                                 class={character.class}
                                 race={character.race}
-                                background={character.background}
+                                level={character.level}
                                 alignment={character.alignment}
-                                experience={character.experience}
+                                background={character.background}
+                                strength={character.strength}
+                                dexterity={character.dexterity}
+                                constitution={character.constitution}
+                                intelligence={character.intelligence}
+                                wisdom={character.wisdom}
+                                charisma={character.charisma}
                             />
                         ))}
                     </div>

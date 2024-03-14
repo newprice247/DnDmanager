@@ -22,5 +22,14 @@ module.exports = {
             .catch(err => {
                 res.status(422).json(err);
             });
-    }
+    },
+    async createCharacter(req, res) {
+        await Character.create(req.body)
+            .then(character => {
+                res.json(character);
+            })
+            .catch(err => {
+                res.status(422).json(err);
+            });
+    },
 };
